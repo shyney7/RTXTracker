@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup
 import requests
 import pandas as pd
 
+
+# ---scrap alternate.de---
 baseurl = 'https://www.alternate.de'
 
 headers = {
@@ -48,7 +50,8 @@ for link in productlinks:
     item = {
         'Name': productname,
         'Price': price,
-        'Stock': stock
+        'Stock': stock,
+        'Link': link
     }
 
     print('Saving:')
@@ -58,6 +61,42 @@ for link in productlinks:
 
 # save to pandas dataframe
 df = pd.DataFrame(rtxlist)
-df.to_excel('alternateRTX.xlsx')
+df.to_csv('alternateRTX.csv')
 print(df)
+
+
+# ---scrape caseking---
+# RTX3080
+# get product links
+r = requests.get('https://www.caseking.de/pc-komponenten/grafikkarten?ckFilters=13915&ckTab=0&sPage=1&sPerPage=48', headers=headers)
+soup = BeautifulSoup(r.content, 'lxml')
+
+productlinks = soup.find_all('a', class_='buynow no-modal', href=True)
+links = []
+for link in productlinks:
+    links.append(link['href'])
+
+name = soup.find_all('span', class_='ProductTitle')
+price = soup.find_all('span', class_='price')
+stock = soup.find_all('span', class_='frontend_plugins_index_delivery_informations')
+
+counter = 0
+rtxlist = []
+for link in links:
+
+    item = {
+        'Name': name[counter].text.strip(),
+        'Price': price[counter].text.replace('€', '').replace(',', '.').replace('*', '').strip(),
+        'Stock': stock[counter].text.strip(),
+        'Link': link
+    }
+    print('Saving Item ', counter, ':')
+    print(item)
+    rtxlist.append(item)
+    counter += 1
+
+# save to pandas dataframe
+df = pd.DataFrame(rtxlist)
+print(df)
+df.to_csv('casekingRTX.csv')
 input('Press Enter to exit...')
