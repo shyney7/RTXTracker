@@ -1,18 +1,23 @@
 from bs4 import BeautifulSoup
-import requests
+from requests_html import HTMLSession
 import pandas as pd
+
+s = HTMLSession()
+
+# get html func
+def getdata(url):
+    r = s.get(url)
+    soup = BeautifulSoup(r.text, 'html.parser')
+    return soup
 
 
 # ---scrap alternate.de---
 baseurl = 'https://www.alternate.de'
 
-headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36'
-}
 
 # get product links
-r = requests.get('https://www.alternate.de/Grafikkarten/html/listings/1458222035317/1486466143032?lk=8378&size=500&hideFilter=false&showFilter=false&filter_2203=NVIDIA+GeForce+RTX+3080&filter_2203=NVIDIA+GeForce+RTX+3070', headers=headers)
-soup = BeautifulSoup(r.content, 'lxml')
+url = 'https://www.alternate.de/Grafikkarten/html/listings/1458222035317/1486466143032?lk=8378&size=500&hideFilter=false&showFilter=false&filter_2203=NVIDIA+GeForce+RTX+3080&filter_2203=NVIDIA+GeForce+RTX+3070'
+soup = getdata(url)
 
 productlist = soup.find_all('div', class_='listRow')
 
@@ -26,8 +31,7 @@ for item in productlist:
 counter = 0
 rtxlist = []
 for link in productlinks:
-    r = requests.get(link, headers=headers)
-    soup = BeautifulSoup(r.content, 'lxml')
+    soup = getdata(link)
 
     # get product name
     nav_tag = soup.find('nav', class_='breadCrumbs')
@@ -68,8 +72,8 @@ print(df)
 # ---scrape caseking---
 # RTX3080
 # get product links
-r = requests.get('https://www.caseking.de/pc-komponenten/grafikkarten?ckFilters=13915&ckTab=0&sPage=1&sPerPage=48', headers=headers)
-soup = BeautifulSoup(r.content, 'lxml')
+url = 'https://www.caseking.de/pc-komponenten/grafikkarten?ckFilters=13915&ckTab=0&sPage=1&sPerPage=48'
+soup = getdata(url)
 
 productlinks = soup.find_all('a', class_='buynow no-modal', href=True)
 links = []
