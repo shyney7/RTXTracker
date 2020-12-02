@@ -130,4 +130,80 @@ for link in links:
 df = pd.DataFrame(rtxlist)
 print(df)
 df.to_csv('casekingRTX.csv')
+
+
+# acom-pc.de
+# RTX 3080
+
+def getacomdata(soup):
+    productlinks = []
+    names = []
+    stock = []
+    rtxlist = []
+
+    productlist = soup.find_all('div', class_='product-content-inner left')
+
+    for item in productlist:
+        for link in item.find_all('a', href=True):
+            productlinks.append(link['href'])
+        for name in item.find_all('a'):
+            names.append(name.text.strip())
+
+    price = soup.find_all('span', class_='price')
+
+    stockdiv = soup.find_all('div', class_='filial_stock_list')
+    for item in stockdiv:
+        stock.append(item.find('span').text.strip())
+
+
+    counter = 0
+    for link in productlinks:
+        item = {
+            'Name': names[counter],
+            'Price': price[counter].text.replace('EUR', '').replace('.', '').replace(',', '.').strip(),
+            'Stock': stock[counter],
+            'Link': link
+        }
+        print('Saving Item ', counter, ':')
+        print(item)
+        rtxlist.append(item)
+        counter += 1
+    return rtxlist
+
+# Asus
+url = 'https://www.acom-pc.de/search?page=search&page_action=query&keywords=RTX+3080&sorting=price&desc=on&sdesc=on&acom_search_result_item_count=60&filter_id=21'
+
+soup = getdata(url)
+rtxlist = []
+
+rtxlist.extend(getacomdata(soup))
+
+# Gigabyte
+url = 'https://www.acom-pc.de/search?page=search&page_action=query&keywords=RTX+3080&sorting=price&desc=on&sdesc=on&acom_search_result_item_count=60&filter_id=211'
+soup = getdata(url)
+
+rtxlist.extend(getacomdata(soup))
+
+# Inno3D
+url = 'https://www.acom-pc.de/search?page=search&page_action=query&keywords=RTX+3080&sorting=price&desc=on&sdesc=on&acom_search_result_item_count=60&filter_id=327'
+soup = getdata(url)
+
+rtxlist.extend(getacomdata(soup))
+
+# MSI
+url = 'https://www.acom-pc.de/search?page=search&page_action=query&keywords=RTX+3080&sorting=price&desc=on&sdesc=on&acom_search_result_item_count=60&filter_id=215'
+soup = getdata(url)
+
+rtxlist.extend(getacomdata(soup))
+
+# Zotac
+url = 'https://www.acom-pc.de/search?page=search&page_action=query&keywords=RTX+3080&sorting=price&desc=on&sdesc=on&acom_search_result_item_count=60&filter_id=445'
+soup = getdata(url)
+
+rtxlist.extend(getacomdata(soup))
+
+# save to pandas dataframe
+df = pd.DataFrame(rtxlist)
+print(df)
+df.to_csv('acomRTX.csv')
 input('Press Enter to exit...')
