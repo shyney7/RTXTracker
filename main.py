@@ -87,10 +87,9 @@ stock = soup.find_all('span', class_='frontend_plugins_index_delivery_informatio
 counter = 0
 rtxlist = []
 for link in links:
-
     item = {
         'Name': name[counter].text.strip(),
-        'Price': price[counter].text.replace('€', '').replace(',', '.').replace('*', '').strip(),
+        'Price': price[counter].text.replace('€', '').replace('.', '').replace(',', '.').replace('*', '').strip(),
         'Stock': stock[counter].text.strip(),
         'Link': link
     }
@@ -98,6 +97,34 @@ for link in links:
     print(item)
     rtxlist.append(item)
     counter += 1
+
+
+# RTX 3070
+url = 'https://www.caseking.de/pc-komponenten/grafikkarten?ckFilters=13917&ckTab=0&sPage=1&sPerPage=48'
+soup = getdata(url)
+
+productlinks = soup.find_all('a', class_='buynow no-modal', href=True)
+links = []
+for link in productlinks:
+    links.append(link['href'])
+
+name = soup.find_all('span', class_='ProductTitle')
+price = soup.find_all('span', class_='price')
+stock = soup.find_all('span', class_='frontend_plugins_index_delivery_informations')
+
+counter = 0
+for link in links:
+    item = {
+        'Name': name[counter].text.strip(),
+        'Price': price[counter].text.replace('€', '').replace('.', '').replace(',', '.').replace('*', '').strip(),
+        'Stock': stock[counter].text.strip(),
+        'Link': link
+    }
+    print('Saving Item ', counter, ':')
+    print(item)
+    rtxlist.append(item)
+    counter += 1
+
 
 # save to pandas dataframe
 df = pd.DataFrame(rtxlist)
