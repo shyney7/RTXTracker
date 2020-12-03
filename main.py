@@ -202,6 +202,32 @@ soup = getdata(url)
 
 rtxlist.extend(getacomdata(soup))
 
+# acom-pc.de
+# RTX 3070
+# ASUS
+url = 'https://www.acom-pc.de/search?page=search&page_action=query&keywords=RTX+3070&sorting=price&desc=on&sdesc=on&acom_search_result_item_count=60&filter_id=21'
+soup = getdata(url)
+
+rtxlist.extend(getacomdata(soup))
+
+# Gigabyte
+url = 'https://www.acom-pc.de/search?page=search&page_action=query&keywords=RTX+3070&sorting=price&desc=on&sdesc=on&acom_search_result_item_count=60&filter_id=211'
+soup = getdata(url)
+
+rtxlist.extend(getacomdata(soup))
+
+# MSI
+url = 'https://www.acom-pc.de/search?page=search&page_action=query&keywords=RTX+3070&sorting=price&desc=on&sdesc=on&acom_search_result_item_count=60&filter_id=215'
+soup = getdata(url)
+
+rtxlist.extend(getacomdata(soup))
+
+# Zotac
+url = 'https://www.acom-pc.de/search?page=search&page_action=query&keywords=RTX+3070&sorting=price&desc=on&sdesc=on&acom_search_result_item_count=60&filter_id=445'
+soup = getdata(url)
+
+rtxlist.extend(getacomdata(soup))
+
 # save to pandas dataframe
 df = pd.DataFrame(rtxlist)
 print(df)
