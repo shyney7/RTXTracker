@@ -143,61 +143,15 @@ df.to_csv('casekingRTX.csv')
 
 # acom-pc.de
 # RTX 3080
-
-# Asus
-url = 'https://www.acom-pc.de/search?page=search&page_action=query&keywords=RTX+3080&sorting=price&desc=on&sdesc=on&acom_search_result_item_count=60&filter_id=21'
-
+url = 'https://www.acom-pc.de/search?page=search&keywords=RTX+3080&cat=349&mnf=&sdesc=on&desc=on&x=16&y=9'
 soup = getdata(url)
 rtxlist = []
 
 rtxlist.extend(get_acomp_data(soup))
 
-# Gigabyte
-url = 'https://www.acom-pc.de/search?page=search&page_action=query&keywords=RTX+3080&sorting=price&desc=on&sdesc=on&acom_search_result_item_count=60&filter_id=211'
-soup = getdata(url)
-
-rtxlist.extend(get_acomp_data(soup))
-
-# Inno3D
-url = 'https://www.acom-pc.de/search?page=search&page_action=query&keywords=RTX+3080&sorting=price&desc=on&sdesc=on&acom_search_result_item_count=60&filter_id=327'
-soup = getdata(url)
-
-rtxlist.extend(get_acomp_data(soup))
-
-# MSI
-url = 'https://www.acom-pc.de/search?page=search&page_action=query&keywords=RTX+3080&sorting=price&desc=on&sdesc=on&acom_search_result_item_count=60&filter_id=215'
-soup = getdata(url)
-
-rtxlist.extend(get_acomp_data(soup))
-
-# Zotac
-url = 'https://www.acom-pc.de/search?page=search&page_action=query&keywords=RTX+3080&sorting=price&desc=on&sdesc=on&acom_search_result_item_count=60&filter_id=445'
-soup = getdata(url)
-
-rtxlist.extend(get_acomp_data(soup))
-
 # acom-pc.de
 # RTX 3070
-# ASUS
-url = 'https://www.acom-pc.de/search?page=search&page_action=query&keywords=RTX+3070&sorting=price&desc=on&sdesc=on&acom_search_result_item_count=60&filter_id=21'
-soup = getdata(url)
-
-rtxlist.extend(get_acomp_data(soup))
-
-# Gigabyte
-url = 'https://www.acom-pc.de/search?page=search&page_action=query&keywords=RTX+3070&sorting=price&desc=on&sdesc=on&acom_search_result_item_count=60&filter_id=211'
-soup = getdata(url)
-
-rtxlist.extend(get_acomp_data(soup))
-
-# MSI
-url = 'https://www.acom-pc.de/search?page=search&page_action=query&keywords=RTX+3070&sorting=price&desc=on&sdesc=on&acom_search_result_item_count=60&filter_id=215'
-soup = getdata(url)
-
-rtxlist.extend(get_acomp_data(soup))
-
-# Zotac
-url = 'https://www.acom-pc.de/search?page=search&page_action=query&keywords=RTX+3070&sorting=price&desc=on&sdesc=on&acom_search_result_item_count=60&filter_id=445'
+url = 'https://www.acom-pc.de/search?page=search&keywords=RTX+3070&cat=349&mnf=&sdesc=on&desc=on&x=42&y=21'
 soup = getdata(url)
 
 rtxlist.extend(get_acomp_data(soup))
